@@ -1,4 +1,4 @@
-package rgclary.assignment1;
+package rgclary.CS4593;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="rgclary.assignment1.DisplayMessageActivity"
+    tools:context="rgclary.CS4593.DisplayMessageActivity"
     tools:showIn="@layout/activity_display_message"
     android:id="@+id/content">
 
