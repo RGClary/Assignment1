@@ -1,9 +1,9 @@
-package rgclary.assignment1;
+package rgclary.CS4593;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,12 +13,14 @@ import android.widget.EditText;
 
 public class MyActivity extends AppCompatActivity {
 
-    public final static String EXTRA_MESSAGE = "rgclary.assignment1.MESSAGE";
+    public final static String EXTRA_MESSAGE = "rgclary.CS4593.MESSAGE";
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
+        //Clear text field
+        editText.setText("");
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
@@ -29,14 +31,25 @@ public class MyActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //Get share prefs and set edit_message to savedMessage
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String message = sharedPref.getString(getString(R.string.savedMessage), null);
+        EditText editText = (EditText) findViewById(R.id.edit_message);
+        editText.setText(message);
+    }
+
+    protected void onPause() {
+        super.onPause();
+
+        //Get message from edit_message
+        EditText editText = (EditText) findViewById(R.id.edit_message);
+        String message = editText.getText().toString();
+
+        //Get sharedPref and set R.stringMessage to message
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.savedMessage),message);
+        editor.commit();
     }
 
     @Override
